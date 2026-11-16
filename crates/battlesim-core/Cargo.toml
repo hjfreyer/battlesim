@@ -1,0 +1,12 @@
+[package]
+name = "battlesim-core"
+description = "Event-and-rule engine for simulating D&D fights"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+serde = { version = "1", features = ["derive", "rc"] }
+serde_json = "1"
+serde-saphyr = "2"
