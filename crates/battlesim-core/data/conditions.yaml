@@ -1,0 +1,42 @@
+# Built-in conditions, written as the same traits a stat block uses.
+# An effect that names one of these in `condition:` carries its rules.
+#
+# Whether a creature can act at all is decided by the engine, not by a rule:
+# incapacitated, stunned, paralyzed and unconscious creatures take no actions,
+# bonus actions or reactions.
+#
+# `event.melee` stands in for "the attacker is within 5 feet", since there is
+# no grid.
+
+prone:
+  - {before: Attack, as: target, when: "event.melee", change: {advantage: true}}
+  - {before: Attack, as: target, when: "not event.melee", change: {disadvantage: true}}
+  - {before: Attack, as: attacker, change: {disadvantage: true}}
+
+poisoned:
+  - {before: Attack, as: attacker, change: {disadvantage: true}}
+
+blinded:
+  - {before: Attack, as: target, change: {advantage: true}}
+  - {before: Attack, as: attacker, change: {disadvantage: true}}
+
+restrained:
+  - {before: Attack, as: target, change: {advantage: true}}
+  - {before: Attack, as: attacker, change: {disadvantage: true}}
+  - {before: Save, as: target, when: "event.ability == dex", change: {disadvantage: true}}
+
+incapacitated: []
+
+stunned:
+  - {before: Attack, as: target, change: {advantage: true}}
+  - {before: Save, as: target, when: "event.ability == str or event.ability == dex", change: {auto_fail: true}}
+
+paralyzed:
+  - {before: Attack, as: target, change: {advantage: true}}
+  - {before: Save, as: target, when: "event.ability == str or event.ability == dex", change: {auto_fail: true}}
+  - {before: Hit, as: target, when: "event.melee", change: {crit: true}}
+
+unconscious:
+  - {before: Attack, as: target, change: {advantage: true}}
+  - {before: Save, as: target, when: "event.ability == str or event.ability == dex", change: {auto_fail: true}}
+  - {before: Hit, as: target, when: "event.melee", change: {crit: true}}
